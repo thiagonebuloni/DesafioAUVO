@@ -13,7 +13,7 @@
         "TotalReceber": 4216.86,
         "HorasExtras": 3.0,
         "HorasDebito": 1.0,
-        "DiasFalta": 34,
+        "DiasFalta": 0,
         "DiasExtras": 0,
         "DiasTrabalhados": 4
       }
@@ -33,7 +33,7 @@
         "TotalReceber": 4438.80,
         "HorasExtras": 4.0,
         "HorasDebito": 0.0,
-        "DiasFalta": 17,
+        "DiasFalta": 0,
         "DiasExtras": 0,
         "DiasTrabalhados": 4
       }
