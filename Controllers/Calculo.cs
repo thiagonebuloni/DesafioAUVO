@@ -33,30 +33,26 @@ namespace DesafioAUVO.Controllers
             // Check if the folder path is empty or null
             if (string.IsNullOrEmpty(folderPath))
             {
-                ModelState.AddModelError("folderPath", "Please provide a valid folder path.");
+                ModelState.AddModelError("folderPath", "Por favor digite um caminho válido.");
                 return View("Index");
             }
 
-            // Get the root path of the application
+            // Caminho raiz do app
             string rootPath = _hostingEnvironment.ContentRootPath;
 
-            // Combine the root path with the specified folder path
+            // Combina o caminho raiz com o diretório de input
             string fullPath = Path.Combine(rootPath, folderPath);
 
-            // Check if the folder path exists
             if (!Directory.Exists(fullPath))
             {
                 ModelState.AddModelError("folderPath", "The specified folder path does not exist.");
                 return View("Index");
             }
-            
-            // Create a list to store the data from all CSV files
-            // List<Person> people = new List<Person>();
 
-            // Get all CSV files in the specified folder
+            // Todos os arquivos CSV do diretório
             string[] csvFiles = Directory.GetFiles(fullPath, "*.csv");
 
-            // Read each CSV file and extract the data
+            // Extrai os dados de cada arquivo CSV
             foreach (string csvFile in csvFiles)
             {
                 int indexSlash = csvFile.LastIndexOf("/");
@@ -65,7 +61,7 @@ namespace DesafioAUVO.Controllers
                 string mesVigencia = nomeArquivo[1];
                 string anoVigencia = nomeArquivo[2].Substring(0,4);
                 
-                // verifica se departamento existe e inclui na lista
+                // Verifica se departamento existe e inclui na lista
                 int indexDepartamento = departamentos.FindIndex(d => d.NomeDepartamento == nomeDepartamento);
                 if (indexDepartamento == -1)
                 {
@@ -86,16 +82,10 @@ namespace DesafioAUVO.Controllers
                         if (isFirstLine)
                         {
                             isFirstLine = false;
-                            continue; // Skip the header line
+                            continue;
                         }
-
-                        // if (values.Length != 2)
-                        // {
-                        //     // Skip the line if it doesn't match the expected format
-                        //     continue;
-                        // }
                         
-                        // Create a new Person object and populate its properties
+                        // Desestrutura valores e faz Parse
                         int codigo = int.Parse(values[0]);
                         string nome = values[1];
                         decimal valorHora = decimal.Parse(String.Concat(values[2].Where(c => !Char.IsWhiteSpace(c))).Substring(2).Replace(",","."));
@@ -135,8 +125,6 @@ namespace DesafioAUVO.Controllers
                             horasExtras = (difference.TotalMinutes - MinimoMinutosDia) / 60;
                         }
 
-                        // if (horasExtras != 0) double horasExtrasDebito = horasExtras / 60;
-
                         int indexFuncionario = funcionarios.FindIndex(f => f.Codigo == codigo);
                         if (indexFuncionario == -1)
                         {
@@ -165,43 +153,18 @@ namespace DesafioAUVO.Controllers
                         departamentos[indexDepartamento].SomaPagamentos(valorAReceber);
                         departamentos[indexDepartamento].SomaDescontos((decimal)(horasDebito * 60) * valorMinuto);
                         departamentos[indexDepartamento].SomaExtras((decimal)(horasExtras * 60) * valorMinuto);
-                        // Console.WriteLine($"{departamentos[indexDepartamento].NomeDepartamento}");
-                        
-
-                        // Person person = new Person
-                        // {
-                        //     Codigo = int.Parse(values[0]),
-                        //     Nome = values[1],
-                        //     ValorHora = decimal.Parse(String.Concat(values[2].Where(c => !Char.IsWhiteSpace(c))).Substring(2).Replace(",",".")),
-                        //     Data = DateTime.ParseExact(values[3], "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                        //     Entrada = DateTime.ParseExact(values[4], "HH:mm:ss", CultureInfo.InvariantCulture),
-                        //     Saida = DateTime.ParseExact(values[5], "HH:mm:ss", CultureInfo.InvariantCulture),
-                        //     Almoco = values[6]
-                        // };
-                        
-                        // Add the person to the list
-                        // people.Add(person);
-
                     }
                 }
             }
 
             
-            // Serialize the list of people to JSON
+            // Serializa a lista departamentos em JSON
             string json = JsonConvert.SerializeObject(departamentos, Formatting.Indented);
 
-            // Save the JSON to a file
+            // Salva o JSON em um arquivo
             string jsonFilePath = Path.Combine(fullPath, "saida.json");
             System.IO.File.WriteAllText(jsonFilePath, json);
 
-            // Get the relative file path within the web application
-            string relativeFilePath = Path.Combine("~", folderPath, "saida.json");
-
-             // Replace backslashes with forward slashes in the file path (for Linux compatibility)
-            // relativeFilePath = relativeFilePath.Replace(Path.DirectorySeparatorChar, '/');
-
-            // Return the JSON file for download
-            // return File(relativeFilePath, "application/json", "output.json");
             return View("Index");
         }
     }

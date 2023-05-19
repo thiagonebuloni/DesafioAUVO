@@ -1,0 +1,42 @@
+[
+  {
+    "NomeDepartamento": "Departamento de Financeiro",
+    "MesVigencia": "Abril",
+    "AnoVigencia": "2022",
+    "TotalAPagar": 4216.86,
+    "TotalDescontos": 110.97,
+    "TotalExtras": 332.91,
+    "Funcionarios": [
+      {
+        "Codigo": 2,
+        "Nome": "Maria de Oliveira",
+        "TotalReceber": 4216.86,
+        "HorasExtras": 3.0,
+        "HorasDebito": 1.0,
+        "DiasFalta": 34,
+        "DiasExtras": 0,
+        "DiasTrabalhados": 4
+      }
+    ]
+  },
+  {
+    "NomeDepartamento": "Departamento de Operações Especiais",
+    "MesVigencia": "Abril",
+    "AnoVigencia": "2022",
+    "TotalAPagar": 4438.80,
+    "TotalDescontos": 0.00,
+    "TotalExtras": 443.88,
+    "Funcionarios": [
+      {
+        "Codigo": 1,
+        "Nome": "Jo�o da Silva",
+        "TotalReceber": 4438.80,
+        "HorasExtras": 4.0,
+        "HorasDebito": 0.0,
+        "DiasFalta": 17,
+        "DiasExtras": 0,
+        "DiasTrabalhados": 4
+      }
+    ]
+  }
+]
