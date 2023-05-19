@@ -1,4 +1,4 @@
-using FirstTryDesafio.Models;
+using DesafioAUVO.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.IO;
@@ -8,13 +8,13 @@ using System.Net;
 using static Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
 using System.Globalization;
 
-namespace FirstTryDesafio.Controllers
+namespace DesafioAUVO.Controllers
 {
-    public class CSVController : Controller
+    public class CalculoController : Controller
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public CSVController(IWebHostEnvironment hostingEnvironment)
+        public CalculoController(IWebHostEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
         }
@@ -25,7 +25,7 @@ namespace FirstTryDesafio.Controllers
         }
 
         [HttpPost]
-        public ActionResult ConvertToJSON(string folderPath)
+        public ActionResult Calculo(string folderPath)
         {
             List<Departamento> departamentos = new List<Departamento>();
             List<Funcionario> funcionarios = new List<Funcionario>();

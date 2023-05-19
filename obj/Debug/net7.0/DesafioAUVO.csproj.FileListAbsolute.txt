@@ -29,3 +29,5 @@
 /home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/obj/Debug/net7.0/DesafioAUVO.pdb
 /home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/obj/Debug/net7.0/DesafioAUVO.genruntimeconfig.cache
 /home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/obj/Debug/net7.0/ref/DesafioAUVO.dll
+/home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/bin/Debug/net7.0/Newtonsoft.Json.dll
+/home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/obj/Debug/net7.0/DesafioAUVO.csproj.CopyComplete

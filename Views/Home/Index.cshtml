@@ -1,8 +1,20 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@using (Html.BeginForm("Calculo", "Calculo", FormMethod.Post))
+{
+
+    <div>
+        <h5><strong>Nome: </strong>Thiago Ribeiro Nebuloni</h5>
+        <h6><strong>Cargo pretendido: </strong>Pessoa Desenvolvedora .Net Junior (Remoto)</h6>
+        <h6><strong>Pretensão salarial: </strong>R$ 2500,00</h6>
+        <h6><strong>Data do teste: </strong>19/05/2023</h6>
+    </div>
+    <hr>
+    <div class="text-center">
+        <label for="folderPath">Caminho do arquivo:</label>
+        <input type="text" name="folderPath" id="folderPath" />
+        <input type="submit" value="Enviar" />
+    </div>
+}

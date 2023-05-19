@@ -1,4 +1,4 @@
-namespace FirstTryDesafio.Models
+namespace DesafioAUVO.Models
 {
 
     public class Funcionario

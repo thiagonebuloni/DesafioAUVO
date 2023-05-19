@@ -18645,6 +18645,11 @@
   "RootNamespace": "DesafioAUVO",
   "Documents": [
     {
+      "FilePath": "/home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/Views/Calculo/Index.cshtml",
+      "TargetPath": "Views\\Calculo\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/Views/Shared/_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
@@ -18655,11 +18660,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/Views/Home/Privacy.cshtml",
-      "TargetPath": "Views\\Home\\Privacy.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "/home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/Views/Shared/_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"
@@ -18667,6 +18667,11 @@
     {
       "FilePath": "/home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/Views/Home/Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/Views/Home/About.cshtml",
+      "TargetPath": "Views\\Home\\About.cshtml",
       "FileKind": "mvc"
     },
     {
