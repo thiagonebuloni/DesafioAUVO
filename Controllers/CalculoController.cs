@@ -58,7 +58,7 @@ namespace DesafioAUVO.Controllers
             string anoVigencia = "";
 
             
-            Parallel.ForEach(csvFiles, csvFile => 
+            Parallel.ForEach(csvFiles, async csvFile => 
             {
                 
                 int indexSlash = csvFile.LastIndexOf("/");
@@ -80,9 +80,9 @@ namespace DesafioAUVO.Controllers
 
                 using (var reader = new StreamReader(csvFile, System.Text.Encoding.GetEncoding("iso-8859-1")))
                 {
-                    while (!reader.EndOfStream)
+                    string? linha;
+                    while ((linha = await reader.ReadLineAsync()) != null)
                     {
-                        var linha = reader.ReadLine();
                         var valores = linha.Split(';');
 
                         if (ehPrimeiraLinha)
@@ -194,7 +194,7 @@ namespace DesafioAUVO.Controllers
 
             // Salva o JSON em um arquivo
             string jsonFilePath = Path.Combine(fullPath, "saida.json");
-            System.IO.File.WriteAllText(jsonFilePath, json);
+            await System.IO.File.WriteAllTextAsync(jsonFilePath, json);
 
             return View("Calculo");
         }

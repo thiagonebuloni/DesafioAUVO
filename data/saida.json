@@ -14,7 +14,7 @@
         "HorasExtras": 18.0,
         "HorasDebito": 6.0,
         "DiasFalta": 0,
-        "DiasExtras": 3,
+        "DiasExtras": 4,
         "DiasTrabalhados": 24
       }
     ]
@@ -30,12 +30,32 @@
       {
         "Codigo": 1,
         "Nome": "João da Silva",
-        "TotalReceber": 4882.68,
-        "HorasExtras": 4.0,
+        "TotalReceber": 9765.36,
+        "HorasExtras": 8.0,
         "HorasDebito": 0.0,
-        "DiasFalta": 17,
+        "DiasFalta": 12,
         "DiasExtras": 0,
-        "DiasTrabalhados": 4
+        "DiasTrabalhados": 8
+      }
+    ]
+  },
+  {
+    "NomeDepartamento": "Departamento de Operações",
+    "MesVigencia": "Fevereiro",
+    "AnoVigencia": "2022",
+    "TotalAPagar": 4882.68,
+    "TotalDescontos": 0.00,
+    "TotalExtras": 443.88,
+    "Funcionarios": [
+      {
+        "Codigo": 1,
+        "Nome": "João da Silva",
+        "TotalReceber": 9765.36,
+        "HorasExtras": 8.0,
+        "HorasDebito": 0.0,
+        "DiasFalta": 12,
+        "DiasExtras": 0,
+        "DiasTrabalhados": 8
       }
     ]
   }
