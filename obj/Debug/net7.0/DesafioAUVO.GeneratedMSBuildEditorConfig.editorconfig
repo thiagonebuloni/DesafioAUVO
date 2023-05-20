@@ -16,8 +16,8 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /home/thiago/Documents/SharpCoders/csharp/DesafioAUVO
 build_property._RazorSourceGeneratorDebug = 
 
-[/home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/Views/Calculo/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2FsY3Vsby9JbmRleC5jc2h0bWw=
+[/home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/Views/Calculo/Calculo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2FsY3Vsby9DYWxjdWxvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/Views/Home/About.cshtml]

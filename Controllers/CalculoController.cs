@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Net;
 using static Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace DesafioAUVO.Controllers
@@ -25,16 +26,16 @@ namespace DesafioAUVO.Controllers
         }
 
         [HttpPost]
-        public ActionResult Calculo(string folderPath)
+        public async Task<ActionResult> CalculoAsync(string folderPath)
         {
             List<Departamento> departamentos = new List<Departamento>();
             List<Funcionario> funcionarios = new List<Funcionario>();
 
-            // Check if the folder path is empty or null
+            // Verifica se o caminho foi inserido no input
             if (string.IsNullOrEmpty(folderPath))
             {
                 ModelState.AddModelError("folderPath", "Por favor digite um caminho válido.");
-                return View("Index");
+                return View("Calculo");
             }
 
             // Caminho raiz do app
@@ -45,8 +46,8 @@ namespace DesafioAUVO.Controllers
 
             if (!Directory.Exists(fullPath))
             {
-                ModelState.AddModelError("folderPath", "The specified folder path does not exist.");
-                return View("Index");
+                ModelState.AddModelError("folderPath", "O caminho inserido não existe.");
+                return View("Calculo");
             }
 
             // Todos os arquivos CSV do diretório
@@ -56,7 +57,8 @@ namespace DesafioAUVO.Controllers
             string mesVigencia = "";
             string anoVigencia = "";
 
-            foreach (string csvFile in csvFiles)
+            
+            Parallel.ForEach(csvFiles, csvFile => 
             {
                 
                 int indexSlash = csvFile.LastIndexOf("/");
@@ -64,6 +66,7 @@ namespace DesafioAUVO.Controllers
                 string nomeDepartamento = nomeArquivo[0];
                 mesVigencia = nomeArquivo[1];
                 anoVigencia = nomeArquivo[2].Substring(0,4);
+
                 // Verifica se departamento existe e inclui na lista
                 int indexDepartamento = departamentos.FindIndex(d => d.NomeDepartamento == nomeDepartamento);
                 if (indexDepartamento == -1)
@@ -167,27 +170,23 @@ namespace DesafioAUVO.Controllers
                         departamentos[indexDepartamento].SomaExtras(Convert.ToDecimal((horasExtras * 60)) * valorMinuto);
                     }
                 }
-            }
+            });
 
             // Calcula dias falta e dias extras
             int diasUteis = DiasUteis.DiasUteisNoMes(int.Parse(anoVigencia), mesVigencia);
-            foreach (var funcionario in funcionarios)
+            Parallel.ForEach(funcionarios, funcionario => 
             {
-                Console.WriteLine($"{funcionario.Nome} - {funcionario.DiasTrabalhados}");
-                Console.WriteLine($"{diasUteis}");
                 if (funcionario.DiasTrabalhados < diasUteis)
                 {
                     int diasFalta = diasUteis - funcionario.DiasTrabalhados;
                     funcionario.SomaDiasFalta(diasFalta);
-                    Console.WriteLine($"DiasFalta = {funcionario.DiasFalta}");
                 }
                 else if (funcionario.DiasTrabalhados > diasUteis)
                 {
                     int diasExtras = funcionario.DiasTrabalhados - diasUteis;
                     funcionario.SomaDiasExtras(diasExtras);
-                    Console.WriteLine($"DiasExtras = {funcionario.DiasExtras}");
                 }
-            }
+            });
 
             
             // Serializa a lista departamentos em JSON
@@ -197,7 +196,7 @@ namespace DesafioAUVO.Controllers
             string jsonFilePath = Path.Combine(fullPath, "saida.json");
             System.IO.File.WriteAllText(jsonFilePath, json);
 
-            return View("Index");
+            return View("Calculo");
         }
     }
 

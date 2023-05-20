@@ -3,7 +3,7 @@
 
 }
 
-<h2>Calculo de Folha - RH</h2>
+<h2>Calculo de Folha de Pagamento - RH</h2>
 
 @using (Html.BeginForm("Calculo", "Calculo", FormMethod.Post))
 {
@@ -11,5 +11,8 @@
         <label for="folderPath">Caminho do arquivo:</label>
         <input type="text" name="folderPath" id="folderPath" />
         <input type="submit" value="Enviar" />
+    </div>
+     <div class="text-danger">
+        @Html.ValidationMessage("folderPath")
     </div>
 }

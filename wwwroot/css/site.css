@@ -85,10 +85,11 @@ input:hover {
 }
 
 #folderPath {
-  background-color: var(--charcoal);
   outline: solid 3px #27274d;
   width: 30%;
   margin: 10px 3px 10px 10px;
+  color: var(--dark);
+  background-color: var(--charcoal);
 }
 
 .form-control {
