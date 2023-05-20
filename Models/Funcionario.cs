@@ -43,7 +43,7 @@ namespace DesafioAUVO.Models
             HorasDebito += horasDebito;
         }
 
-        public void SomaDiasFaltas(int diasFalta)
+        public void SomaDiasFalta(int diasFalta)
         {
             DiasFalta += diasFalta;
         }

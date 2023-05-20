@@ -53,14 +53,17 @@ namespace DesafioAUVO.Controllers
             string[] csvFiles = Directory.GetFiles(fullPath, "*.csv");
 
             // Extrai os dados de cada arquivo CSV
+            string mesVigencia = "";
+            string anoVigencia = "";
+
             foreach (string csvFile in csvFiles)
             {
+                
                 int indexSlash = csvFile.LastIndexOf("/");
                 string[] nomeArquivo = csvFile.Substring(indexSlash+1).Split("-");
                 string nomeDepartamento = nomeArquivo[0];
-                string mesVigencia = nomeArquivo[1];
-                string anoVigencia = nomeArquivo[2].Substring(0,4);
-                
+                mesVigencia = nomeArquivo[1];
+                anoVigencia = nomeArquivo[2].Substring(0,4);
                 // Verifica se departamento existe e inclui na lista
                 int indexDepartamento = departamentos.FindIndex(d => d.NomeDepartamento == nomeDepartamento);
                 if (indexDepartamento == -1)
@@ -70,37 +73,37 @@ namespace DesafioAUVO.Controllers
                     indexDepartamento = departamentos.FindIndex(d => d.NomeDepartamento == nomeDepartamento);
                 }
                 
-                bool isFirstLine = true;
+                bool ehPrimeiraLinha = true;
 
-                using (var reader = new StreamReader(csvFile))
+                using (var reader = new StreamReader(csvFile, System.Text.Encoding.GetEncoding("iso-8859-1")))
                 {
                     while (!reader.EndOfStream)
                     {
-                        var line = reader.ReadLine();
-                        var values = line.Split(';');
+                        var linha = reader.ReadLine();
+                        var valores = linha.Split(';');
 
-                        if (isFirstLine)
+                        if (ehPrimeiraLinha)
                         {
-                            isFirstLine = false;
+                            ehPrimeiraLinha = false;
                             continue;
                         }
                         
                         // Desestrutura valores e faz Parse
-                        int codigo = int.Parse(values[0]);
-                        string nome = values[1];
-                        decimal valorHora = decimal.Parse(String.Concat(values[2].Where(c => !Char.IsWhiteSpace(c))).Substring(2).Replace(",","."));
-                        DateTime data = DateTime.Parse(values[3], CultureInfo.InvariantCulture);
-                        DateTime entrada = DateTime.ParseExact(values[4], "HH:mm:ss", CultureInfo.InvariantCulture);
-                        DateTime saida = DateTime.ParseExact(values[5], "HH:mm:ss", CultureInfo.InvariantCulture);
-                        string almoco = values[6];
+                        int codigo = int.Parse(valores[0]);
+                        string nome = valores[1];
+                        decimal valorHora = decimal.Parse(String.Concat(valores[2].Where(c => !Char.IsWhiteSpace(c))).Substring(2).Replace(",","."));
+                        DateOnly data = DateOnly.ParseExact(valores[3], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        DateTime entrada = DateTime.ParseExact(valores[4], "HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime saida = DateTime.ParseExact(valores[5], "HH:mm:ss", CultureInfo.InvariantCulture);
+                        string almoco = valores[6];
 
                         // Constantes
                         decimal valorMinuto = valorHora / 60;
-                        int MinimoMinutosDia = 9 * 60;
+                        int minimoMinutosDia = 9 * 60;
 
                         // Calculo horas trabalhadas
                         TimeSpan difference = saida - entrada;
-                        decimal valorAReceber = valorMinuto * (decimal)difference.TotalMinutes;
+                        decimal valorAReceber = valorMinuto * Convert.ToDecimal(difference.TotalMinutes);
                         double horasDebito = 0;
                         double horasExtras = 0;
 
@@ -112,18 +115,20 @@ namespace DesafioAUVO.Controllers
                         // Almoco maior que 1 hora
                         if (tempoAlmoco.TotalMinutes > 60)
                         {
-                            valorAReceber -= (decimal)(tempoAlmoco.TotalMinutes - 60) * valorMinuto;
+                            valorAReceber -= Convert.ToDecimal(tempoAlmoco.TotalMinutes - 60) * valorMinuto;
                         }
 
                         // Calculo horas em débito e horas extras
-                        if (difference.TotalMinutes < MinimoMinutosDia)
+                        if (difference.TotalMinutes < minimoMinutosDia)
                         {
-                            horasDebito = (MinimoMinutosDia - difference.TotalMinutes) / 60;
+                            horasDebito = (minimoMinutosDia - difference.TotalMinutes) / 60;
                         }
-                        else if (difference.TotalMinutes > MinimoMinutosDia)
+                        else if (difference.TotalMinutes > minimoMinutosDia)
                         {
-                            horasExtras = (difference.TotalMinutes - MinimoMinutosDia) / 60;
+                            horasExtras = (difference.TotalMinutes - minimoMinutosDia) / 60;
                         }
+
+                        valorAReceber = valorAReceber + (Convert.ToDecimal(horasExtras) * valorHora) - (Convert.ToDecimal(horasDebito) * valorHora);
 
                         int indexFuncionario = funcionarios.FindIndex(f => f.Codigo == codigo);
                         if (indexFuncionario == -1)
@@ -150,10 +155,37 @@ namespace DesafioAUVO.Controllers
                             funcionarios[indexFuncionario].AcrescentaDiasTrabalhados();
                         }
 
+                        int indexFunciEmDepartamento = departamentos[indexDepartamento]
+                                                        .Funcionarios.FindIndex(f => f.Codigo == codigo);
+                        if (indexFunciEmDepartamento == -1)
+                        {
+                            departamentos[indexDepartamento]
+                            .AcrescentaFuncionarioNoDepartamento(funcionarios[indexFuncionario]);
+                        }
                         departamentos[indexDepartamento].SomaPagamentos(valorAReceber);
-                        departamentos[indexDepartamento].SomaDescontos((decimal)(horasDebito * 60) * valorMinuto);
-                        departamentos[indexDepartamento].SomaExtras((decimal)(horasExtras * 60) * valorMinuto);
+                        departamentos[indexDepartamento].SomaDescontos(Convert.ToDecimal((horasDebito * 60)) * valorMinuto);
+                        departamentos[indexDepartamento].SomaExtras(Convert.ToDecimal((horasExtras * 60)) * valorMinuto);
                     }
+                }
+            }
+
+            // Calcula dias falta e dias extras
+            int diasUteis = DiasUteis.DiasUteisNoMes(int.Parse(anoVigencia), mesVigencia);
+            foreach (var funcionario in funcionarios)
+            {
+                Console.WriteLine($"{funcionario.Nome} - {funcionario.DiasTrabalhados}");
+                Console.WriteLine($"{diasUteis}");
+                if (funcionario.DiasTrabalhados < diasUteis)
+                {
+                    int diasFalta = diasUteis - funcionario.DiasTrabalhados;
+                    funcionario.SomaDiasFalta(diasFalta);
+                    Console.WriteLine($"DiasFalta = {funcionario.DiasFalta}");
+                }
+                else if (funcionario.DiasTrabalhados > diasUteis)
+                {
+                    int diasExtras = funcionario.DiasTrabalhados - diasUteis;
+                    funcionario.SomaDiasExtras(diasExtras);
+                    Console.WriteLine($"DiasExtras = {funcionario.DiasExtras}");
                 }
             }
 
