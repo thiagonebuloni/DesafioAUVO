@@ -31,4 +31,3 @@
 /home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/obj/Debug/net7.0/ref/DesafioAUVO.dll
 /home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/bin/Debug/net7.0/Newtonsoft.Json.dll
 /home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/obj/Debug/net7.0/DesafioAUVO.csproj.CopyComplete
-/home/thiago/Documents/SharpCoders/csharp/DesafioAUVO/bin/Debug/net7.0/data/saida.json
