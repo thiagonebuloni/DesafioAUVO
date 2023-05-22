@@ -23,6 +23,7 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpPost]
     public IActionResult CalculoAsync()
     {
         return View();

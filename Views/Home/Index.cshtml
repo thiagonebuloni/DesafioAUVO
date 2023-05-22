@@ -2,22 +2,25 @@
     ViewData["Title"] = "Home";
 }
 
+<h2>Calculo de Folha de Pagamento - RH</h2>
+
+<div>
+    <h5><strong>Nome: </strong>Thiago Ribeiro Nebuloni</h5>
+    <h6><strong>Cargo pretendido: </strong>Pessoa Desenvolvedora .Net Junior (Remoto)</h6>
+    <h6><strong>Pretensão salarial: </strong>R$ 2500,00</h6>
+    <h6><strong>Data do teste: </strong>22/05/2023</h6>
+</div>
+
 @using (Html.BeginForm("Calculo", "Calculo", FormMethod.Post))
 {
 
-    <div>
-        <h5><strong>Nome: </strong>Thiago Ribeiro Nebuloni</h5>
-        <h6><strong>Cargo pretendido: </strong>Pessoa Desenvolvedora .Net Junior (Remoto)</h6>
-        <h6><strong>Pretensão salarial: </strong>R$ 2500,00</h6>
-        <h6><strong>Data do teste: </strong>22/05/2023</h6>
-    </div>
     <hr>
     <div class="text-center">
-        <label for="folderPath">Caminho do arquivo:</label>
+        <label for="folderPath">Caminho do diretório:</label>
         <input type="text" name="folderPath" id="folderPath" />
         <input type="submit" value="Enviar" />
     </div>
-    <div>
+    <div class="text-danger">
         @Html.ValidationMessage("folderPath")
     </div>
 }

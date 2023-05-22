@@ -1,6 +1,5 @@
 @{
     ViewBag.Title = "Calculo de Folha - RH";
-
 }
 
 <h2>Calculo de Folha de Pagamento - RH</h2>
@@ -8,7 +7,7 @@
 @using (Html.BeginForm("Calculo", "Calculo", FormMethod.Post))
 {
     <div>
-        <label for="folderPath">Caminho do arquivo:</label>
+        <label for="folderPath">Caminho do diretório:</label>
         <input type="text" name="folderPath" id="folderPath" />
         <input type="submit" value="Enviar" />
     </div>

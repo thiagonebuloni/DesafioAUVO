@@ -4,7 +4,7 @@
 
 O projeto consiste em um webapp em padrão MVC para cálculo de espelhos de ponto de funcionários de uma empresa.
 
-![screen](~/images/home.png)
+![screen](images/home.png)
 
 Na Home indique o caminho de um diretório. O programa processa todos os arquivos CSV contidos dentro dele e devolve um arquivo JSON com os cálculos de dias e horas trabalhadas, dias de ausência ou extras e valores a receber. Assim como os valores totais por departamento.
 
