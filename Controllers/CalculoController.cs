@@ -119,6 +119,7 @@ namespace DesafioAUVO.Controllers
                         if (tempoAlmoco.TotalMinutes > 60)
                         {
                             valorAReceber -= Convert.ToDecimal(tempoAlmoco.TotalMinutes - 60) * valorMinuto;
+                            horasDebito += (minimoMinutosDia - difference.TotalMinutes) / 60;
                         }
 
                         // Calculo horas em débito e horas extras
